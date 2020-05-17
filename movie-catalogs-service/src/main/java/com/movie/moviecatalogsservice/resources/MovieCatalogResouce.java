@@ -27,11 +27,11 @@ public class MovieCatalogResouce {
 		
 		List<CatalogItem> listOfCatalog = new ArrayList<CatalogItem>();
 		CatalogItem cI = null;
-		UserRating userRatings = restTemplate.getForObject("http://localhost:8082/movieRating/user/"+userId, UserRating.class);
+		UserRating userRatings = restTemplate.getForObject("http://movie-info-service/movieRating/user/"+userId, UserRating.class);
 		
 		for(Rating r : userRatings.getUserRating()) {
 			// JAVA UNMARSHALL MOVIE, so if there's no empty constructor it will raise error
-			Movie movieInfo = restTemplate.getForObject("http://localhost:8081/movies/"+r.getMovieId(), Movie.class);
+			Movie movieInfo = restTemplate.getForObject("http://rating-data-info/movies/"+r.getMovieId(), Movie.class);
 			cI = new CatalogItem(movieInfo.getMovieName(),movieInfo.getInfo(),r.getRating());
 			listOfCatalog.add(cI);
 		}
